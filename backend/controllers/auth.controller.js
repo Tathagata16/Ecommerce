@@ -52,9 +52,16 @@ export const handleLogin = async(req,res)=>{
         const isSame = await bcrypt.compare(password,user.password);
         if(isSame){
             generateToken(user._id,res)
-            return res.status(200).json({message:"logging successfull"});
+            res.status(200).json({message:"logging successfull",
+                user:{
+                    name:user.name,
+                    email:user.email,
+                }
+            });
         }else{
-            return res.status(400).json({message:"Invalid credentials"});
+            return res.status(400).json({message:"Invalid credentials",
+                
+            });
         }
 
     }catch(error){

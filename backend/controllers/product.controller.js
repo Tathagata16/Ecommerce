@@ -7,6 +7,12 @@ export const getProducts = async (req , res)=>{
 
         }
 
+        // const products = await Product.find();
+        // return res.status(200).json({
+        //     data: products,
+        //     pagination: null,
+        // });
+
         
     }catch(error){
         console.log("error in get products controller",error);
@@ -38,9 +44,10 @@ export const getProduct = async (req,res) =>{
 export const createProduct = async (req,res)=>{
     try{
         const {name, description, price, category, stock} = req.body;
-        if(!name || !description || !price || !category || !stock){
-            res.status(400).json({message:"all fields are required"});
+        if(!name || !description || price === undefined || !category || stock === undefined){
+            return res.status(400).json({message:"all fields are required"});
         }
+
         const product = await Product.create({
             name,
             description,
@@ -109,4 +116,5 @@ export const deleteProduct = async (req,res) =>{
         })
     }
 }
+
 

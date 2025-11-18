@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate } from 'react-router-dom';
 import ProductList from '../components/ProductList';
-import { productAPI } from '../lib/axios.js';
+import { axiosInstance, productAPI } from '../lib/axios.js';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -9,6 +9,8 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState('');
+  const [loggingOut, setLoggingOut] = useState(false);
+  const navigate = useNavigate();
 
   const fetchProducts = async (page = 1) => {
     try {
@@ -17,7 +19,7 @@ const Home = () => {
       
       const response = await productAPI.getProducts(page, 9);
       
-      if (response.success) {
+      if (response) {
         setProducts(response.data);
         setPagination(response.pagination);
       } else {
@@ -40,15 +42,32 @@ const Home = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const user = JSON.parse(localStorage.getItem("user"));
+  const isLoggedIn = user?true:false;
+  const isAdmin = user?.email==="tathagataghosh1609@gmail.com";
+
+  const handleLogout = async(e)=>{
+    setLoggingOut(true);
+    const res = await axiosInstance.post('/logout');
+    localStorage.removeItem("user");
+    setTimeout(() => {
+      navigate('/login');
+    }, 2000);
+
+    setLoggingOut(false);
+    
+  }
+
   return (
     <div className="home-page">
       <nav className="navbar">
         <div className="nav-brand">E-Commerce Store</div>
         <div className="nav-links">
           <Link to="/" className="nav-link">Home</Link>
-          <Link to="/admin" className="nav-link">Admin</Link>
-          <Link to="/login" className="nav-link">Login</Link>
-          <Link to="/signup" className="nav-link">Signup</Link>
+          {isAdmin && (<Link to="/admin" className="nav-link">Admin</Link>)}
+          {!isLoggedIn && (<Link to="/login" className="nav-link">Login</Link>)}
+          {!isLoggedIn && (<Link to="/signup" className="nav-link">Signup</Link>)}
+          <button onClick={handleLogout}>{loggingOut?"logging out":"logout"}</button>
         </div>
       </nav>
 

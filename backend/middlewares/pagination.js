@@ -1,7 +1,7 @@
 const paginateResults = (model) =>{
     return async (req , res , next) =>{
         try{
-            const page = parseInt(req,Query.page) || 1;
+            const page = parseInt(req.query.page) || 1;
             const limit = parseInt(req.query.limit) || 10;
             const sortBy = req.query.sortBy || 'createdAt';
             const sortOrder = req.query.sortOrder=== 'asc' ? 1 : -1;
@@ -30,13 +30,14 @@ const paginateResults = (model) =>{
                     hasPrevPage: hasPrevPage,
                     nextPage: hasNextPage ? page + 1 : null,
                     prevPage: hasPrevPage ? page - 1 : null,
-                }
+                }, 
+                data:results,
             };
 
             next();
         }catch(error){
             console.log("error in pagination middleware", error);
-            res.status(500).json({message:"Error paginating results"});
+            return res.status(500).json({message:"Error paginating results"});
         }
     }
 }

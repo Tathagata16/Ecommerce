@@ -17,7 +17,7 @@ const Signup = () => {
    * Handles the form submission event.
    * @param {React.FormEvent<HTMLFormElement>} event - The form submission event.
    */
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault(); // Prevent the default browser refresh
     
     // Log the form data to the console
@@ -25,7 +25,9 @@ const Signup = () => {
     // console.log({ name, email, password });
     const formData = {name:name,email:email,password:password};
 
-    const res = axiosInstance.post('/signup',formData);
+    const res = await axiosInstance.post('/signup',formData);
+
+    localStorage.setItem("user",JSON.stringify(res.data.user));
 
     // Show a success message
     
@@ -106,7 +108,7 @@ const Signup = () => {
             <input
               id="password"
               name="password"
-              type="password"
+              type="text"
               autoComplete="current-password"
               required
               minLength="8"

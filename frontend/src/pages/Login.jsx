@@ -16,19 +16,21 @@ export default function Login() {
    * Handles the form submission event.
    * @param {React.FormEvent<HTMLFormElement>} event - The form submission event.
    */
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault(); // Prevent the default browser refresh
     
     // Log the form data to the console
     console.log('Login Data Submitted:');
     
     const formData = {email:email,password:password};
-    const res = axiosInstance.post("/login",formData);
+    const res = await axiosInstance.post("/login",formData);
+
+    localStorage.setItem("user",JSON.stringify(res.data.user));
 
     // Show a success message
     console.log("login tick")
     console.log(res);
-    setMessage(res.message);
+    setMessage(res.data.message);
 
     // Clear the form fields
     setEmail('');

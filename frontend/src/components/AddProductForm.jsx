@@ -99,7 +99,7 @@ const AddProductForm = ({ onSubmit, onCancel }) => {
               name="stock"
               value={formData.stock}
               onChange={handleChange}
-              min="0"
+              
               required
             />
           </div>

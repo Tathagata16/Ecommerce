@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import axiosInstance from '../lib/axios';
+import {axiosInstance} from '../lib/axios';
 import { useNavigate } from 'react-router-dom';
 
 

@@ -1,17 +1,21 @@
 import React from 'react'
-import {Route,Router, Routes} from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Home from './pages/Home'
-
+import Admin from './pages/Admin.jsx'
+import './App.css'
 
 const App = () => {
   return (
-    <Routes>
-      <Route path='/signup' element={<Signup/>}></Route>
-      <Route path='/login' element={<Login/>}></Route>
-      <Route path='/' element={<Home/>}></Route>
-    </Routes>
+    <div className="App">
+      <Routes>
+        <Route path='/signup' element={<Signup/>} />
+        <Route path='/login' element={<Login/>} />
+        <Route path='/admin' element={<Admin/>} />
+        <Route path='/' element={<Home/>} />
+      </Routes>
+    </div>
   )
 }
 

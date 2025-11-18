@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
     baseURL:"http://localhost:3000/api",
     withCredentials:true,
 })
 
 
-export const productApi = {
+export const productAPI = {
     //product apis
     getProducts: async (page = 1, limit = 9, filters = {})=>{
         const params = new URLSearchParams({
@@ -43,7 +43,7 @@ export const productApi = {
     },
 };
 
-module.exports =  {productApi,axiosInstance};
+
 
 
 

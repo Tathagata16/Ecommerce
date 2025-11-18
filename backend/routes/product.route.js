@@ -1,9 +1,10 @@
-const express = require('express');
+import express from 'express'
 const router = express.Router();
 
-import {getProducts, getProduct, createProduct,
+import {getProducts, getProduct,
     updateProduct,
-    deleteProduct} from '../controllers/product.controller.js'
+    } from '../controllers/product.controller.js'
+import { createProduct,deleteProduct } from '../controllers/product.controller.js';
 
 import paginatedResults from '../middlewares/pagination.js'
 

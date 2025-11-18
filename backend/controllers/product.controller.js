@@ -1,6 +1,6 @@
 import Product from "../models/product.model.js";
 
-const getProducts = async (req , res)=>{
+export const getProducts = async (req , res)=>{
     try{
         if(res.paginatedResults){
             return res.status(200).json(res.paginatedResults);
@@ -14,7 +14,7 @@ const getProducts = async (req , res)=>{
 }
 
 //get single product
-const getProduct = async (req,res) =>{
+export const getProduct = async (req,res) =>{
     try{const product = await Product.findById(req.params.id);
 
     if(!product){
@@ -35,7 +35,7 @@ const getProduct = async (req,res) =>{
 }
 
 //create product (admin only)
-const createProduct = async (req,res)=>{
+export const createProduct = async (req,res)=>{
     try{
         const {name, description, price, category, stock} = req.body;
         if(!name || !description || !price || !category || !stock){
@@ -62,7 +62,7 @@ const createProduct = async (req,res)=>{
     }
 }
 
-const updateProduct = async (req,res) =>{
+export const updateProduct = async (req,res) =>{
     try{
         const {name, description,price,category,stock} = req.body;
         const id = req.params.id;
@@ -90,7 +90,7 @@ const updateProduct = async (req,res) =>{
     }
 }
 
-const deleteProduct = async (req,res) =>{
+export const deleteProduct = async (req,res) =>{
     try{
         const product = await Product.findByIdAndDelete(req.params.id);
 
@@ -110,6 +110,3 @@ const deleteProduct = async (req,res) =>{
     }
 }
 
-module.exports = {
-    getProducts, getProduct, createProduct, updateProduct, deleteProduct,
-};
